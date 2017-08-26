@@ -50,7 +50,21 @@
 
         socket.on('users', function(usr) {
           console.log('users', usr)
-          document.querySelector('#users').innerText = usr;
+          const users = document.querySelector('#users');
+          users.innerText = usr;  
+        })
+
+        socket.on('newUser', function() {
+          let p = document.createElement('p');
+          p.innerText = 'user has entered';
+          users.parentNode.appendChild(p);  
+        })
+
+        socket.on('disconnect', function() {
+          const users = document.querySelector('#users');
+          let p = document.createElement('p');
+          p.innerText = 'user has left';
+          users.parentNode.appendChild(p);
         })
 
 

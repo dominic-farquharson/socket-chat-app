@@ -28,9 +28,11 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
  
   socket.on('newUser', function(e) {
+    console.log('there was a new user!!!')
     io.clients( (err, clients) => {
       io.emit('users', clients.length)
     })
+    io.emit('newUser');
   })
  
   // user disconnects
@@ -39,8 +41,9 @@ io.on('connection', function(socket) {
     io.clients( (err, clients) => {
       io.emit('users', clients.length)
     })
+    io.emit('disconnect')
   })
-  
+
   // user connects
   socket.on('chat message', function(msg) {
     // console.log(`message: ${msg}`, socket);
