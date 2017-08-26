@@ -26,20 +26,30 @@ app.get('/', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-  console.log('a user connected');
+ 
+  socket.on('newUser', function(e) {
+    io.clients( (err, clients) => {
+      io.emit('users', clients.length)
+    })
+  })
+ 
   // user disconnects
   socket.on('disconnect', function() {
     console.log('user disconnected');
+    io.clients( (err, clients) => {
+      io.emit('users', clients.length)
+    })
   })
+  
   // user connects
   socket.on('chat message', function(msg) {
-    console.log(`message: ${msg}`);
+    // console.log(`message: ${msg}`, socket);
     // sending event back
     io.emit('chat message', msg);
   })
 })
 
-const PORT = 3001;
+const PORT = 3002;
 http.listen(PORT, () => {
   console.log('Listenining on *:3001');
 });

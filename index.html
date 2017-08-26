@@ -17,6 +17,7 @@
     </style>
   </head>
   <body>
+    <div>Users: <span id="users"></span></div>
     <ul id="messages"></ul>
     <form action="">
       <input id="m" autocomplete="off" />
@@ -37,6 +38,8 @@
           message.value = '';
         }
 
+        socket.emit('newUser', 'new user connected')
+
         socket.on('chat message', function(msg) {
           const messages = document.querySelector('#messages');
           let li = document.createElement('li');
@@ -44,6 +47,13 @@
           li.appendChild(txt);
           messages.appendChild(li);
         })
+
+        socket.on('users', function(usr) {
+          console.log('users', usr)
+          document.querySelector('#users').innerText = usr;
+        })
+
+
       })();
     </script>
   </body>
