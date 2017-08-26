@@ -25,6 +25,7 @@
     
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      // client side js
       (function(){
         // exposes global io 
         const socket = io();
@@ -35,6 +36,14 @@
           socket.emit('chat message', message.value);
           message.value = '';
         }
+
+        socket.on('chat message', function(msg) {
+          const messages = document.querySelector('#messages');
+          let li = document.createElement('li');
+          let txt = document.createTextNode(msg);
+          li.appendChild(txt);
+          messages.appendChild(li);
+        })
       })();
     </script>
   </body>

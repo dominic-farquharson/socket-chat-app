@@ -5,9 +5,11 @@
 
    -  serves client automatically
    
-   Emitting Events
+  Emitting Events
     - can send and receive any events you want. (any data can be sent) 
-
+  Broadcasting 
+    - emit event from server to rest of users
+    - io.emit => send event to everyone
    
 */
 
@@ -31,7 +33,9 @@ io.on('connection', function(socket) {
   })
   // user connects
   socket.on('chat message', function(msg) {
-    console.log(`message: ${msg}`)
+    console.log(`message: ${msg}`);
+    // sending event back
+    io.emit('chat message', msg);
   })
 })
 
