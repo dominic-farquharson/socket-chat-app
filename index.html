@@ -23,5 +23,19 @@
       <button>Send</button>
     </form>
     
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      (function(){
+        // exposes global io 
+        const socket = io();
+        document.querySelector('form').onsubmit = function(e){
+          let message = document.querySelector('#m');
+          e.preventDefault();
+          // sending to server
+          socket.emit('chat message', message.value);
+          message.value = '';
+        }
+      })();
+    </script>
   </body>
 </html>
